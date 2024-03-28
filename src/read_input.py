@@ -57,6 +57,6 @@ def read_network_file(file_path: str) -> Tuple[int, np.array, np.array]:
 
 
 if __name__ == "__main__":
-    N, R, C = read_network_file("4_city.txt")
+    N, R, C = read_network_file("../data/4_city.txt")
     print(N)
     print(C)
