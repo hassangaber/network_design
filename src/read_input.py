@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 import numpy as np
 from typing import Tuple, List
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 def construct_symmetric_matrix(upper_triangular_components: List[List[float]]) -> np.array:
     """
@@ -52,6 +55,8 @@ def read_network_file(file_path: str) -> Tuple[int, np.array, np.array]:
 
     R = construct_symmetric_matrix(R_values)
     C = construct_symmetric_matrix(C_values)
+
+    logging.info(f'Loaded in {file_path}')
 
     return (num_nodes, R, C)
 
