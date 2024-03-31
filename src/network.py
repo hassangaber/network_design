@@ -6,7 +6,13 @@ import networkx as nx # May need to add to requirements
 from typing import List
 
 class NetworkDesigner:
-    def __init__(self, num_cities: int, cost_matrix: np.array, reliability_matrix: np.array, max_cost: float):
+    def __init__(
+        self, 
+        num_cities: int, 
+        cost_matrix: np.array, 
+        reliability_matrix: np.array, 
+        max_cost: float):
+        
         self.num_cities = num_cities
         self.cost_matrix = cost_matrix
         self.reliability_matrix = reliability_matrix
