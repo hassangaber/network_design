@@ -5,6 +5,7 @@ import networkx as nx
 from typing import List, Tuple
 import random
 import logging
+from greedy import guided_search
 
 logging.basicConfig(level=logging.INFO)
 
@@ -71,7 +72,7 @@ class NetworkDesigner:
         G.add_edges_from(network)
         return G
 
-    def _simulate_network_scenario_with_graph(self, network: List[Tuple[int, int]]):
+    def _simulate_network_scenario_with_graph(self, network: List[Tuple[int, int]]) -> bool:
         """
         Simulates a single scenario of the network, randomly failing links based on their reliability,
         using a graph to check for connectivity.
@@ -122,7 +123,7 @@ class NetworkDesigner:
         logging.info("Displaying top 3 network solutions...")
         self._graph_top_networks(ranked_networks[:3])
 
-    def _graph_top_networks(self, networks):
+    def _graph_top_networks(self, networks: list) -> None:
         for idx, (network, cost, reliability) in enumerate(networks, start=1):
             G = nx.Graph()
             G.add_edges_from(network)
@@ -130,3 +131,8 @@ class NetworkDesigner:
             plt.title(f"Network {idx} - Cost: {cost:.2f}, Reliability: {reliability:.4f}")
             nx.draw(G)
         plt.show()
+
+    def fit_transform_part_2(self, max_cost:int) -> None:
+        solutions = guided_search(self.num_cities, self.cost_matrix, self.reliability_matrix, max_cost)
+        print(solutions)
+        self._graph_top_networks(solutions)

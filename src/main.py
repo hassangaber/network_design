@@ -13,6 +13,12 @@ def main():
         designer = NetworkDesigner(num_cities-1, cost_matrix, reliability_matrix)
 
         designer.fit_transform_part_1(max_cost=max_cost)
+    # file=FILES[0]
+    # num_cities, reliability_matrix, cost_matrix = read_network_file(file)
+
+    # designer = NetworkDesigner(num_cities-1, cost_matrix, reliability_matrix)
+
+    # designer.fit_transform_part_2(max_cost=120)
 
 if __name__ == "__main__":
     main()
