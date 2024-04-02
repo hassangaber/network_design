@@ -16,12 +16,14 @@ def main():
         end = time.monotonic()
         print(f'Simple solution runtime for file={file} max_cost={max_cost} : {end - start: .2f} s')
 
-    file=FILES[4]
-    num_cities, reliability_matrix, cost_matrix = read_network_file(file)
 
-    designer = NetworkDesigner(num_cities, cost_matrix, reliability_matrix)
-
-    designer.fit_transform_part_2(max_cost=150)
+    for file, max_cost in zip(FILES, MAX_COSTS):
+        num_cities, reliability_matrix, cost_matrix = read_network_file(file)
+        designer = NetworkDesigner(num_cities, cost_matrix, reliability_matrix)
+        start = time.monotonic()
+        designer.fit_transform_part_2(max_cost=max_cost)
+        end = time.monotonic()
+        print(f'Complex solution runtime for file={file} max_cost={max_cost} : {end - start: .2f} s')
 
 if __name__ == "__main__":
     main()

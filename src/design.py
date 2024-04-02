@@ -80,7 +80,7 @@ class NetworkDesigner:
         """
         G = self._network_to_graph(network)
         for i, j in network:
-            if random.random() >= self.reliability_matrix[i][j-1]:
+            if random.random() >= self.reliability_matrix[i][j]:
                 G.remove_edge(i, j)
                 if not nx.is_connected(G): 
                     return False
@@ -134,7 +134,7 @@ class NetworkDesigner:
         plt.show()
 
 
-    def fit_transform_part_2(self, max_cost: int, reliability_simulations: int = 1000):
+    def fit_transform_part_2(self, max_cost: int, reliability_simulations: int = 100):
         """
         Finds an optimal network configuration, simulates its reliability, and visualizes the result.
         """
@@ -148,8 +148,8 @@ class NetworkDesigner:
                                       max_cost=max_cost)
 
         # Convert network_graph to a format that simulate_network_reliability_with_graph can process
-        network_edges = [(u, v) for u, v in network_graph.edges()]
-        
+        network_edges = tuple((u, v) for u, v in network_graph.edges())
+        print(network_edges)
         # Step 2: Calculate the network's reliability
         reliability = self.simulate_network_reliability_with_graph(network_edges, reliability_simulations)
 
