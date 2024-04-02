@@ -6,7 +6,7 @@ The main objective of this assignment is to compare a brute-force and guided sea
 
 The brute-force algorithm generates the optimal graph using the following approach: 1. Generate all the possible graphs given the number of nodes and full connectivity of the graphs 2. Filter the graphs based on the edge cost and maximum cost constraint 3. Compute all graph reliabilities and choose the highest reliability graph.
 
-The guided search algorithm finds the optimal graph using the following: 
+The guided search algorithm finds the optimal graph using the a greedy heuristic where the objective is minimizing the cost-to-reliability ratio of the links between the nodes.
 
 ### Code Structure
 

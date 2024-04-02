@@ -5,6 +5,7 @@ import networkx as nx
 from typing import List, Tuple
 import random
 import logging
+
 from greedy import guided_search
 
 logging.basicConfig(level=logging.INFO)
@@ -131,96 +132,39 @@ class NetworkDesigner:
             plt.title(f"Network {idx} - Cost: {cost:.2f}, Reliability: {reliability:.4f}")
             nx.draw(G, with_labels=True)
         plt.show()
-    
-    def _find(self, parent, i):
-        if parent[i] == i:
-            return i
-        return self._find(parent, parent[i])
 
-    def _union(self, parent, rank, x, y):
-        xroot = self._find(parent, x)
-        yroot = self._find(parent, y)
-        if rank[xroot] < rank[yroot]:
-            parent[xroot] = yroot
-        elif rank[xroot] > rank[yroot]:
-            parent[yroot] = xroot
-        else:
-            parent[yroot] = xroot
-            rank[xroot] += 1
 
-    def guided_search(self, max_cost: int) -> nx.Graph:
-        """
-        Finds an optimal network configuration using a guided search approach and returns it as a NetworkX Graph.
-        """
-        # Initialize Union-Find data structures
-        parent = list(range(self.num_cities))
-        rank = [0] * self.num_cities
-
-        # Create a graph to represent the network
-        network_graph = nx.Graph()
-
-        # Initialize variables
-        total_cost = 0
-
-        # Create a list of all possible connections with their cost and reliability
-        edges = [(i, j, self.cost_matrix[i][j], self.reliability_matrix[i][j]) 
-                 for i in range(self.num_cities) for j in range(i + 1, self.num_cities)]
-
-        # Sort edges based on cost-to-reliability ratio
-        edges.sort(key=lambda x: x[2]/x[3])
-
-        # Iterate over sorted edges and add them if they don't form a cycle and are within the cost limit
-        for i, j, cost, _ in edges:
-            if total_cost + cost > max_cost:
-                break
-            if self._find(parent, i) != self._find(parent, j):
-                self._union(parent, rank, i, j)
-                network_graph.add_edge(i, j, weight=cost)
-                total_cost += cost
-
-        # Check if the graph is fully connected
-        if not nx.is_connected(network_graph):
-            raise ValueError("Unable to construct a connected network within the given cost limit.")
-
-        return network_graph
-
-    def simulate_network_reliability(self, network_graph: nx.Graph, simulations: int = 1000) -> float:
-        """
-        Simulates the reliability of the network over a given number of simulations.
-        """
-        successful_simulations = 0
-        for _ in range(simulations):
-            # Create a deep copy of the graph for simulation
-            G = network_graph.copy()
-            for (u, v, reliability) in G.edges.data('reliability'):
-                if random.random() > reliability:
-                    G.remove_edge(u, v)
-            if nx.is_connected(G):
-                successful_simulations += 1
-        return successful_simulations / simulations
-
-    def fit_transform(self, max_cost: int, reliability_simulations: int = 1000):
+    def fit_transform_part_2(self, max_cost: int, reliability_simulations: int = 1000):
         """
         Finds an optimal network configuration, simulates its reliability, and visualizes the result.
         """
-        # Step 1: Use guided_search to find an optimal network configuration
-        network_graph = self.guided_search(max_cost)
+        print(self.reliability_matrix)
+        print(self.cost_matrix)
 
+        # Step 1: Use guided_search to find an optimal network configuration
+        network_graph = guided_search(cost_matrix=self.cost_matrix, 
+                                      reliability_matrix=self.reliability_matrix, 
+                                      num_cities=self.num_cities,
+                                      max_cost=max_cost)
+
+        # Convert network_graph to a format that simulate_network_reliability_with_graph can process
+        network_edges = [(u, v) for u, v in network_graph.edges()]
+        
         # Step 2: Calculate the network's reliability
-        #reliability = self.simulate_network_reliability(network_graph, reliability_simulations)
+        reliability = self.simulate_network_reliability_with_graph(network_edges, reliability_simulations)
 
         # Step 3: Visualize the network
         plt.figure(figsize=(10, 8))
         pos = nx.spring_layout(network_graph)
         nx.draw(network_graph, pos, with_labels=True, node_color='skyblue', node_size=700, font_size=15)
 
-        # Annotate edges with reliability
-        # edge_labels = dict([((u, v,), f'{reliability:.2f}')
-        #                     for u, v, reliability in network_graph.edges.data('reliability')])
-        # nx.draw_networkx_edge_labels(network_graph, pos, edge_labels=edge_labels, font_color='red')
+        # Annotate edges with reliability and cost from the matrices directly
+        edge_labels = {(u, v): f"r={self.reliability_matrix[u][v]:.2f}, c={self.cost_matrix[u][v]}"
+                    for u, v in network_graph.edges()}
+        nx.draw_networkx_edge_labels(network_graph, pos, edge_labels=edge_labels, font_color='black')
 
-        # total_cost = sum(nx.get_edge_attributes(network_graph, 'weight').values())
-        #plt.title(f"Optimal Network - Cost: {total_cost:.2f}, Reliability: {reliability:.4f}")
+        # Calculate and display the total cost
+        total_cost = sum(self.cost_matrix[u][v] for u, v in network_graph.edges())
+        print(f"Optimal Network - Cost: {total_cost:.2f}, Reliability: {reliability:.4f}")
         plt.show()
-
 
