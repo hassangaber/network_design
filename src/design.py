@@ -167,5 +167,8 @@ class NetworkDesigner:
         # Calculate and display the total cost
         total_cost = sum(self.cost_matrix[u][v] for u, v in network_graph.edges())
         print(f"Optimal Network - Cost: {total_cost:.2f}, Reliability: {reliability:.4f}")
+        plt.savefig(f'results/graph_{self.num_cities}_max_cost={max_cost}_c={total_cost}_r={reliability}.jpg')
         plt.show()
+        plt.plot()
+        
 
