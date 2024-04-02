@@ -39,46 +39,68 @@ def _union(parent: List[int], rank: List[int], x: int, y: int) -> None:
         rank[xroot] += 1
 
 
-def guided_search(num_cities: int, cost_matrix: np.array, reliability_matrix: np.array, max_cost: int) -> nx.Graph:
+def guided_search(num_cities: int, 
+                  cost_matrix: np.array, 
+                  reliability_matrix: np.array, 
+                  max_cost: int, 
+                  spanning_tree_solution: bool = False) -> nx.Graph:
     """
-    Utilizes a greedy heuristic approach to find an optimal network configuration within a specified maximum cost.
-    
-    The greedy heuristic sorts potential connections (edges) based on their cost-to-reliability ratio, preferring edges that
-    offer a better balance of low cost and high reliability. It then iteratively adds these edges to the network,
-    ensuring no cycles are formed (to maintain a spanning tree structure until necessary), and the total cost does not
-    exceed the specified limit.
+    Finds an optimal network configuration using a greedy heuristic approach. The method first constructs a minimum
+    spanning tree (MST) based on the cost-to-reliability ratio. If spanning_tree_solution is False, it then adds
+    additional edges to increase reliability, potentially forming cycles.
     
     Args:
     - num_cities: The number of cities (nodes) in the network.
-    - cost_matrix: A 2D array where `cost_matrix[i][j]` represents the cost of connecting city `i` to city `j`.
-    - reliability_matrix: A 2D array where `reliability_matrix[i][j]` represents the reliability of the connection
-      between city `i` and city `j`.
-    - max_cost: The maximum total cost allowed for the network.
+    - cost_matrix: A 2D array representing the cost of connecting cities.
+    - reliability_matrix: A 2D array representing the reliability of connections between cities.
+    - max_cost: The maximum allowable cost for the network.
+    - spanning_tree_solution: A boolean indicating whether to stop at a spanning tree solution or to add more edges.
     
     Returns:
-    - A NetworkX Graph object representing the optimal network configuration found.
+    - A NetworkX Graph object representing the constructed network.
     """
     parent = list(range(num_cities))
     rank = [0] * num_cities
     optimal_solution = nx.Graph()
     total_cost = 0
-    edges = [(i, j, cost_matrix[i][j], reliability_matrix[i][j]) 
-             for i in range(num_cities) for j in range(i + 1, num_cities)]
 
-    # Sort edges based on cost-to-reliability ratio
-    edges.sort(key=lambda x: x[2]/x[3])
+    edges = [(i, j, cost_matrix[i][j], reliability_matrix[i][j]) for i in range(num_cities) for j in range(i + 1, num_cities)]
+    edges.sort(key=lambda x: x[2]/x[3])  # cost-to-reliability ratio is the greedy objective
 
-    # Iterate over sorted edges and add them if they don't form a cycle and are within the cost limit
+    # Iterate over all potential edges sorted by the cost-to-reliability ratio.
+    # This sorting is key to the greedy heuristic: at each step, we consider the next most cost-effective edge.
     for i, j, cost, _ in edges:
+        # Check if adding the current edge would exceed the maximum allowed cost.
+        # If so, we stop the process as we cannot add more edges without breaching the cost limit.
+        # This termination condition ensures we adhere to the budget constraint.
         if total_cost + cost > max_cost:
             break
-        if _find(parent, i) != _find(parent, j):
-            _union(parent, rank, i, j)
-            optimal_solution.add_edge(i, j, weight=cost)
-            total_cost += cost
 
-    # Check if the graph is fully connected
+        # Check if adding the current edge would create a cycle in the case of spanning_tree_solution being True,
+        # or add the edge regardless in the case of spanning_tree_solution being False.
+        # The use of the Union-Find structure creates a valid tree structure or forms a more connected network.
+        if (_find(parent, i) != _find(parent, j)) or (not spanning_tree_solution):
+            # Merge the subsets, indicating that we're either connecting two previously disconnected components
+            # (in the case of a spanning tree) or simply adding an edge to increase connectivity.
+            _union(parent, rank, i, j)
+            
+            # Add the current edge to the optimal solution graph, including its cost and reliability as attributes.
+            # This step is where the edge becomes part of the final network.
+            optimal_solution.add_edge(i, j, weight=cost, reliability=reliability_matrix[i][j])
+            
+            # Update the total cost of the network to include the cost of the newly added edge.
+            total_cost += cost
+            
+            # For spanning tree solutions, check if the graph is now fully connected with the minimum number of edges
+            # (num_cities - 1 edges). If so, we have formed a minimum spanning tree and can terminate early.
+            # This check is skipped if spanning_tree_solution is False, allowing for more cycles.
+            if spanning_tree_solution and nx.is_connected(optimal_solution) and (optimal_solution.number_of_edges() == num_cities - 1):
+                break
+
+
+    # Ensure the final network is connected; if not, it's not a valid solution
     if not nx.is_connected(optimal_solution):
         raise ValueError("Unable to construct a connected network within the given cost limit.")
 
     return optimal_solution
+
