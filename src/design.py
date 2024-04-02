@@ -134,7 +134,7 @@ class NetworkDesigner:
         plt.show()
 
 
-    def fit_transform_part_2(self, max_cost: int, reliability_simulations: int = 100):
+    def fit_transform_part_2(self, max_cost: int, reliability_simulations: int = 10000):
         """
         Finds an optimal network configuration, simulates its reliability, and visualizes the result.
         """
@@ -151,6 +151,7 @@ class NetworkDesigner:
         network_edges = tuple((u, v) for u, v in network_graph.edges())
         print(network_edges)
         # Step 2: Calculate the network's reliability
+        #reliability_simulations = 2 ** network_graph.number_of_edges()
         reliability = self.simulate_network_reliability_with_graph(network_edges, reliability_simulations)
 
         # Step 3: Visualize the network

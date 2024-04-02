@@ -8,6 +8,10 @@ The brute-force algorithm generates the optimal graph using the following approa
 
 The guided search algorithm finds the optimal graph using the a greedy heuristic where the objective is minimizing the cost-to-reliability ratio of the links between the nodes.
 
+#### Monte-Carlo Approach to Computing Reliability
+
+Reliability is the probability that the graph works (is fully-connected; you can visit any node regardless of the node you are at). By creating simulations of removing edges and then checking for full connectivity with that modified graph, we can approximate the reliability of the graph. Eventually, if all the combination of edge disconnections is found ($2^{E}$), the exact reliability can be found. The approximation of the simulation gets better with more iterations. 
+
 ### Code Structure
 
 ### How to Run

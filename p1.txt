@@ -1,2 +1,0 @@
-Simple solution runtime for file=data/4_city.txt max_cost=50 :  33.11 s
-Simple solution runtime for file=data/4_city.txt max_cost=60 :  7.97 s
