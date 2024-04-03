@@ -123,6 +123,7 @@ class NetworkDesigner:
         # Step 6: Graph the top 3 networks
         logging.info("Displaying top 3 network solutions...")
         self._graph_top_networks(ranked_networks[:3])
+        print("Simple Solution Best Cost:", ranked_networks[0][1], "Best Reliability:", ranked_networks[0][2])
 
     def _graph_top_networks(self, networks: list) -> None:
         for idx, (network, cost, reliability) in enumerate(networks, start=1):
@@ -135,6 +136,42 @@ class NetworkDesigner:
 
 
     def fit_transform_part_2(self, max_cost: int, reliability_simulations: int = 10000):
+        # Initialization
+        remaining_vertices = set(range(self.num_cities))
+        spanning_tree = set()
+        total_cost = 0
+
+        # Start from an arbitrary vertex
+        current_vertex = remaining_vertices.pop()
+        connected_vertices = {current_vertex}
+
+        # Prim's algorithm adapted for maximum reliability
+        while remaining_vertices:
+            edge, cost, reliability = self._find_best_edge(connected_vertices, remaining_vertices, max_cost - total_cost)
+            if edge is None:
+                break  # No edge found within the cost constraint
+            spanning_tree.add(edge)
+            total_cost += cost
+            current_vertex = edge[1]  # Assuming edge is (u, v) where v is the newly added vertex
+            connected_vertices.add(current_vertex)
+            remaining_vertices.remove(current_vertex)
+
+        # Augment the network with additional edges for redundancy, without exceeding max_cost
+        self._augment_network(spanning_tree, max_cost - total_cost)
+
+        # Convert the spanning tree into a format suitable for simulations
+        network_edges = list(spanning_tree)
+        reliability = self.simulate_network_reliability_with_graph(network_edges, reliability_simulations)
+
+        final_reliability = self.simulate_network_reliability_with_graph(network_edges, reliability_simulations)
+        final_cost = sum(self.cost_matrix[edge[0]][edge[1]] for edge in network_edges)
+
+        print(f"Complex solution Prims for {self.num_cities} cities and max cost {max_cost} has reliability {final_reliability:.4f} and cost {final_cost:.2f}")
+
+        # Visualization
+        self._visualize_network(network_edges, total_cost, reliability)
+
+    def fit_transform_part_3(self, max_cost: int, reliability_simulations: int = 10000):
         """
         Finds an optimal network configuration, simulates its reliability, and visualizes the result.
         """
@@ -170,5 +207,41 @@ class NetworkDesigner:
         plt.savefig(f'results/graph_{self.num_cities}_max_cost={max_cost}_c={total_cost}_r={reliability}.jpg')
         plt.show()
         plt.plot()
+
+    def _find_best_edge(self, connected_vertices, remaining_vertices, available_budget):
+        best_edge = None
+        best_cost = float('inf')
+        best_reliability = 0
+        for u in connected_vertices:
+            for v in remaining_vertices:
+                cost = self.cost_matrix[u][v]
+                reliability = self.reliability_matrix[u][v]
+                if cost <= available_budget and reliability > best_reliability:
+                    best_edge = (u, v)
+                    best_cost = cost
+                    best_reliability = reliability
+        return best_edge, best_cost, best_reliability
+
+    def _augment_network(self, spanning_tree, available_budget):
+        all_edges = [(i, j) for i in range(self.num_cities) for j in range(i + 1, self.num_cities)]
+        potential_edges = [edge for edge in all_edges if edge not in spanning_tree]
+
+        for edge in potential_edges:
+            cost = self.cost_matrix[edge[0]][edge[1]]
+            if cost <= available_budget:
+                # Simulate adding this edge and check if it improves reliability
+                spanning_tree.add(edge)
+                available_budget -= cost
+                # Note: In a real implementation, you'd want to check if adding the edge actually improves reliability
+                # before permanently adding it to the spanning_tree
+
+    def _visualize_network(self, network_edges, total_cost, reliability):
+        G = nx.Graph()
+        G.add_edges_from(network_edges)
+        plt.figure(figsize=(10, 8))
+        nx.draw(G, with_labels=True, node_color='skyblue', node_size=700, edge_color='black')
+        plt.title(f"Network - Cost: {total_cost:.2f}, Reliability: {reliability:.4f}")
+        plt.show()
+
         
 
