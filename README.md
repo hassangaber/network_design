@@ -1,5 +1,14 @@
 # ECSE 422 Network Design Assignment
 
+### How to Run
+
+- Navigate to the root of the project
+- Install packages with `pip install -r requirements.txt`
+- Choose which part to run by setting the appropriate booleans inside `src/main.py` or do not modify to run all three approaches.
+- Run `python src/main.py`
+- If a `networkx` random state error arises, run `pip install decorator==5.0.9` and retry.
+
+
 ### Description
 
 The main objective of this assignment is to compare a brute-force and guided search approach to solving a network optimization problem. The problem's constraints include a maximum cost constraint, a node constraint, and the objective of maximizing network overall reliability. The two approaches should yield the same solutions with the guided search arriving at the optimal graph faster than the brute-force method.
@@ -14,10 +23,7 @@ Reliability is the probability that the graph works (is fully-connected; you can
 
 ### Code Structure
 
-### How to Run
-
-- Navigate to the root of the project
-- Install packages with `pip install -r requirements.txt`
-- Run `python3 src/main.py`
-- If a `networkx` random state error arises, run `pip install decorator==5.0.9` and retry.
-
+1. `src/design.py` - Contains the solution class and the code for the brute-force solution, Prim's algorithm
+2. `src/greedy.py` - Defines the guided search algorithm for the greedy hueristic
+3. `src/read_input.py` - Function to read the `.txt` files for their cost and reliability matrices
+4. `src/main.py` - Main script to run solution containing booleans to choose which approach to use to solve the constraint problem.

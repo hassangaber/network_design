@@ -5,6 +5,7 @@ import networkx as nx
 from typing import List, Tuple
 import random
 import logging
+from tqdm import tqdm
 
 from greedy import guided_search
 
@@ -115,7 +116,7 @@ class NetworkDesigner:
         logging.info(f'Computing network reliability with {reliability_simulations} iterations of Monte Carlo...')
         network_reliabilities = [(network, 
                                   cost, 
-                                  self.simulate_network_reliability_with_graph(network, simulations=reliability_simulations)) for network, cost in filtered_networks]
+                                  self.simulate_network_reliability_with_graph(network, simulations=reliability_simulations)) for network, cost in tqdm(filtered_networks)]
 
         # Step 5: Rank networks based on reliability
         ranked_networks = sorted(network_reliabilities, key=lambda x: x[2], reverse=True)
