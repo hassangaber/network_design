@@ -27,3 +27,7 @@ Reliability is the probability that the graph works (is fully-connected; you can
 2. `src/greedy.py` - Defines the guided search algorithm for the greedy hueristic
 3. `src/read_input.py` - Function to read the `.txt` files for their cost and reliability matrices
 4. `src/main.py` - Main script to run solution containing booleans to choose which approach to use to solve the constraint problem.
+
+### Example Output
+
+![Optimal graph given 6 nodes with cost constraint equal to 65](results/1_graph_6.png)
