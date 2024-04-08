@@ -1,0 +1,22 @@
+Simple Solution Best Cost: 50.0 Best Reliability: 0.9897
+Simple solution runtime for file=data/4_city.txt max_cost=50 :  8.28 s
+Simple Solution Best Cost: 55.0 Best Reliability: 0.9905
+Simple solution runtime for file=data/4_city.txt max_cost=60 :  7.08 s
+Simple Solution Best Cost: 60.0 Best Reliability: 0.9869
+Simple solution runtime for file=data/5_city.txt max_cost=60 :  57.77 s
+Simple Solution Best Cost: 70.0 Best Reliability: 0.9956
+Simple solution runtime for file=data/5_city.txt max_cost=70 :  77.48 s
+Simple Solution Best Cost: 60.0 Best Reliability: 0.9978
+Simple solution runtime for file=data/6_city.txt max_cost=65 :  2026.17 s
+Simple Solution Best Cost: 80.0 Best Reliability: 0.9995
+Simple solution runtime for file=data/6_city.txt max_cost=85 :  2479.30 s
+Complex solution Prims for 4 cities and max cost 50 has reliability 0.9225 and cost 50.00
+Prims max reliability Complex solution runtime for file=data/4_city.txt max_cost=50 :  2.29 s
+Complex solution Prims for 4 cities and max cost 60 has reliability 0.9414 and cost 60.00
+Prims max reliability Complex solution runtime for file=data/4_city.txt max_cost=60 :  1.49 s
+Complex solution Prims for 5 cities and max cost 60 has reliability 0.9376 and cost 60.00
+Prims max reliability Complex solution runtime for file=data/5_city.txt max_cost=60 :  0.80 s
+Complex solution Prims for 5 cities and max cost 70 has reliability 0.8883 and cost 70.00
+Prims max reliability Complex solution runtime for file=data/5_city.txt max_cost=70 :  0.98 s
+Complex solution Prims for 6 cities and max cost 65 has reliability 0.7803 and cost 60.00
+Prims max reliability Complex solution runtime for file=data/6_city.txt max_cost=65 :  0.69 s

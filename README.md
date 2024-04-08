@@ -1,5 +1,10 @@
 # ECSE 422 Network Design Assignment
 
+### Submission Details
+- Python code is in `src/`
+- Graph outputs shown for each approach inside `results/`
+- An example trace of a full run is in `results/example_trace.txt`
+
 ### How to Run
 
 - Navigate to the root of the project

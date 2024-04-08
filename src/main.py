@@ -9,7 +9,7 @@ MAX_COSTS=[50, 60, 60, 70, 65, 85]
 ### Booleans to choose which parts to run ###
 
 PART_1 = True
-PART_2 = True
+PART_2 = False
 PART_3 = True
 
 ##############################################
