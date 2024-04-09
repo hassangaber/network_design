@@ -1,5 +1,9 @@
 # ECSE 422 Network Design Assignment
 
+- Hassan Gaber 260891600
+- Johan Trippitelli 260917958
+- Maxim Drouin 260913373
+
 ### Submission Details
 - Python code is in `src/`
 - Graph outputs shown for each approach inside `results/`
@@ -35,4 +39,4 @@ Reliability is the probability that the graph works (is fully-connected; you can
 
 ### Example Output
 
-![Optimal graph given 6 nodes with cost constraint equal to 65](results/1_graph_6.png)
+![Optimal graph given 6 nodes with cost constraint equal to 65](results/greedy/graph_6_max_cost=85_c=80.0_r=0.9951.jpg)
