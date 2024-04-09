@@ -21,7 +21,7 @@ def main() -> None:
             num_cities, reliability_matrix, cost_matrix = read_network_file(file)
             designer = NetworkDesigner(num_cities-1, cost_matrix, reliability_matrix)
             start = time.monotonic()
-            designer.fit_transform_part_1(max_cost=max_cost, reliability_simulations=10000)
+            designer.fit_transform_part_1(max_cost=max_cost, reliability_simulations=1000)
             end = time.monotonic()
             print(f'Simple solution runtime for file={file} max_cost={max_cost} : {end - start: .2f} s')
 
@@ -40,7 +40,7 @@ def main() -> None:
             num_cities, reliability_matrix, cost_matrix = read_network_file(file)
             designer = NetworkDesigner(num_cities, cost_matrix, reliability_matrix)
             start = time.monotonic()
-            designer.fit_transform_part_3(max_cost=max_cost)
+            designer.fit_transform_part_3(max_cost=max_cost, reliability_simulations=10000)
             end = time.monotonic()
             print(f'Greedy Complex solution runtime for file={file} max_cost={max_cost} : {end - start: .2f} s')
 

@@ -1,0 +1,90 @@
+Simple Solution Best Cost: 50.0 Best Reliability: 0.987
+Simple solution runtime for file=data/4_city.txt max_cost=50 :  3.43 s
+Simple Solution Best Cost: 55.0 Best Reliability: 0.994
+Simple solution runtime for file=data/4_city.txt max_cost=60 :  2.27 s
+Simple Solution Best Cost: 60.0 Best Reliability: 0.991
+Simple solution runtime for file=data/5_city.txt max_cost=60 :  6.29 s
+Simple Solution Best Cost: 70.0 Best Reliability: 0.998
+Simple solution runtime for file=data/5_city.txt max_cost=70 :  9.55 s
+Simple Solution Best Cost: 60.0 Best Reliability: 0.999
+Simple solution runtime for file=data/6_city.txt max_cost=65 :  104.30 s
+Simple Solution Best Cost: 80.0 Best Reliability: 1.0
+Simple solution runtime for file=data/6_city.txt max_cost=85 :  275.64 s
+[[0.   0.94 0.9  0.94]
+ [0.94 0.   0.93 0.96]
+ [0.9  0.93 0.   0.91]
+ [0.94 0.96 0.91 0.  ]]
+[[ 0. 15. 20. 10.]
+ [15.  0. 15. 10.]
+ [20. 15.  0. 20.]
+ [10. 10. 20.  0.]]
+((1, 3), (1, 0), (1, 2), (3, 0))
+Optimal Network - Cost: 50.00, Reliability: 0.9258
+Greedy Complex solution runtime for file=data/4_city.txt max_cost=50 :  2.47 s
+[[0.   0.94 0.9  0.94]
+ [0.94 0.   0.93 0.96]
+ [0.9  0.93 0.   0.91]
+ [0.94 0.96 0.91 0.  ]]
+[[ 0. 15. 20. 10.]
+ [15.  0. 15. 10.]
+ [20. 15.  0. 20.]
+ [10. 10. 20.  0.]]
+((1, 3), (1, 0), (1, 2), (3, 0))
+Optimal Network - Cost: 50.00, Reliability: 0.9235
+Greedy Complex solution runtime for file=data/4_city.txt max_cost=60 :  2.13 s
+[[0.   0.94 0.97 0.91 0.92]
+ [0.94 0.   0.94 0.9  0.94]
+ [0.97 0.94 0.   0.93 0.96]
+ [0.91 0.9  0.93 0.   0.91]
+ [0.92 0.94 0.96 0.91 0.  ]]
+[[ 0. 10. 10. 20. 15.]
+ [10.  0. 20. 10. 10.]
+ [10. 20.  0. 20. 10.]
+ [20. 10. 20.  0. 20.]
+ [15. 10. 10. 20.  0.]]
+((0, 2), (0, 1), (2, 4), (4, 1), (1, 3))
+Optimal Network - Cost: 50.00, Reliability: 0.8892
+Greedy Complex solution runtime for file=data/5_city.txt max_cost=60 :  1.73 s
+[[0.   0.94 0.97 0.91 0.92]
+ [0.94 0.   0.94 0.9  0.94]
+ [0.97 0.94 0.   0.93 0.96]
+ [0.91 0.9  0.93 0.   0.91]
+ [0.92 0.94 0.96 0.91 0.  ]]
+[[ 0. 10. 10. 20. 15.]
+ [10.  0. 20. 10. 10.]
+ [10. 20.  0. 20. 10.]
+ [20. 10. 20.  0. 20.]
+ [15. 10. 10. 20.  0.]]
+((0, 2), (0, 1), (0, 4), (2, 4), (4, 1), (1, 3))
+Optimal Network - Cost: 65.00, Reliability: 0.8913
+Greedy Complex solution runtime for file=data/5_city.txt max_cost=70 :  1.62 s
+[[0.   0.94 0.91 0.96 0.93 0.92]
+ [0.94 0.   0.94 0.97 0.91 0.92]
+ [0.91 0.94 0.   0.94 0.9  0.94]
+ [0.96 0.97 0.94 0.   0.93 0.96]
+ [0.93 0.91 0.9  0.93 0.   0.91]
+ [0.92 0.92 0.94 0.96 0.91 0.  ]]
+[[ 0. 10. 25. 10. 20. 30.]
+ [10.  0. 10. 10. 25. 20.]
+ [25. 10.  0. 20. 40. 10.]
+ [10. 10. 20.  0. 20. 10.]
+ [20. 25. 40. 20.  0. 30.]
+ [30. 20. 10. 10. 30.  0.]]
+((1, 3), (1, 0), (1, 2), (3, 0), (3, 5), (5, 2))
+Optimal Network - Cost: 60.00, Reliability: 0.9882
+Greedy Complex solution runtime for file=data/6_city.txt max_cost=65 :  1.73 s
+[[0.   0.94 0.91 0.96 0.93 0.92]
+ [0.94 0.   0.94 0.97 0.91 0.92]
+ [0.91 0.94 0.   0.94 0.9  0.94]
+ [0.96 0.97 0.94 0.   0.93 0.96]
+ [0.93 0.91 0.9  0.93 0.   0.91]
+ [0.92 0.92 0.94 0.96 0.91 0.  ]]
+[[ 0. 10. 25. 10. 20. 30.]
+ [10.  0. 10. 10. 25. 20.]
+ [25. 10.  0. 20. 40. 10.]
+ [10. 10. 20.  0. 20. 10.]
+ [20. 25. 40. 20.  0. 30.]
+ [30. 20. 10. 10. 30.  0.]]
+((1, 3), (1, 0), (1, 2), (3, 0), (3, 5), (3, 2), (5, 2))
+Optimal Network - Cost: 80.00, Reliability: 0.9948
+Greedy Complex solution runtime for file=data/6_city.txt max_cost=85 :  2.64 s
